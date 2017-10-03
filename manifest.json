@@ -1,1 +1,6 @@
-{}
+{
+  "manifest_version": 2,
+  "name": "Canned Response",
+  "version": "0.0.1",
+  "description": "For LinkedIn domain, offer canned reponses for saving time and carpals."
+}
