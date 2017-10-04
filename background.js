@@ -8,7 +8,7 @@ var _CANNED_RESPONSES = [
   ["Beta", "Beta body"],
 ];
 
-chrome.webNavigation.onCompleted.addListener(function(details) {
+chrome.webNavigation.onHistoryStateUpdated.addListener(function(details) {
   chrome.tabs.executeScript(details.tabId, {
     file: "canned_response.js"
   }, () => {
@@ -17,7 +17,7 @@ chrome.webNavigation.onCompleted.addListener(function(details) {
       id: MENU_PREFIX + details.tabId,
       title: "Canned Response",
       contexts: ["editable"],
-      documentUrlPatterns: [ "*://stevengharms.com/*" ]
+      documentUrlPatterns: [ "*://*.linkedin.com/messaging/*" ]
     });
 
     // Create a canned responses menu
@@ -27,13 +27,15 @@ chrome.webNavigation.onCompleted.addListener(function(details) {
         parentId: parentMenuId,
         id: MENU_PREFIX + details.tabId + i,
         contexts: ["editable"],
-        documentUrlPatterns: [ "*://stevengharms.com/*" ]
+        documentUrlPatterns: [ "*://*.linkedin.com/messaging/*" ]
       })
       _CANNED_RESPONSE_REGISTRY[id] = response[1];
     });
+
+    chrome.tabs.sendMessage(details.tabId, { initialize_placeholder: "Canned Responses Ready To Go!" })
   })
 }, {
-  url: [{ "hostContains": "stevengharms.com" }]
+  url: [{ "hostContains": "linkedin.com", "pathPrefix": "/messaging" }]
 });
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {

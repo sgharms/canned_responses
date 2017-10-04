@@ -9,5 +9,5 @@
     "persistent": false
   },
 
-  "permissions": ["webNavigation", "*://stevengharms.com/*", "contextMenus"]
+  "permissions": ["webNavigation", "*://*.linkedin.com/*", "contextMenus", "storage"]
 }
